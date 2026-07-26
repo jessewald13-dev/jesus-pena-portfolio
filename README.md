@@ -33,7 +33,7 @@ assets/jesus-pena-jr-resume.pdf
 
 Images ship in two sizes: `-sm` for grid and thumbnail use, full size for the
 lightbox and larger layouts, wired up through `srcset`. The originals were 2 to 3 MB
-each; the whole `assets/img` directory is now around 10 MB, all of it lazy loaded
+each; the whole `assets/img` directory is now around 9 MB, all of it lazy loaded
 below the hero.
 
 The hero portrait is the one exception. It is a WebP with an alpha channel, cut
@@ -63,9 +63,16 @@ before first paint so there is no flash of the wrong palette.
 and media included. Sharp geometry is doing the editorial work.
 
 **Marketing section.** Two bodies of work, two treatments. The JDG Golden Summer
-collateral is a campaign, so eleven pieces sit in a grid that reads like a contact
-sheet. The FBLA and SGA pieces stay in a horizontal rail, which suits four items and
-would be tedious at eleven. Both feed the same lightbox. The section carries a top
+collateral sits in a grid that reads like a contact sheet; the FBLA and SGA pieces
+stay in a horizontal rail, which suits four items. Both feed the same lightbox.
+
+The JDG set is curated to eight of the eleven pieces in the source PDF, chosen for
+spread across product categories rather than volume. Four of the eleven ran the same
+"Luxury jewelry, now at stunning discounts" layout; only the black-ground bracelet
+survives, because bracelets were otherwise the one category with no representation
+and it is the highest-contrast cut of the four. Order runs the product categories
+across the first row, then pairs the two dark cuts before the two non-advertising
+pieces. The section carries a top
 level nav entry, since it is the first thing a communications or marketing recruiter
 looks for, and it is cross-linked from the JDG rebrand case study in both directions.
 
