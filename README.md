@@ -28,11 +28,13 @@ assets/css/site.css         design tokens, layout, components
 assets/js/site.js           theme, nav, reveals, counters, rail, lightbox
 assets/fonts/               Phosphor icon font, subset to the 19 glyphs used
 assets/img/                 photography and design work, web-optimized
+assets/jesus-pena-jr-resume.pdf
 ```
 
 Images ship in two sizes: `-sm` for grid and thumbnail use, full size for the
 lightbox and larger layouts, wired up through `srcset`. The originals were 2 to 3 MB
-each; the whole `assets/img` directory is now around 6.5 MB.
+each; the whole `assets/img` directory is now around 10 MB, all of it lazy loaded
+below the hero.
 
 The hero portrait is the one exception. It is a WebP with an alpha channel, cut
 out of the studio white so it floats on the paper instead of sitting in a white
@@ -59,6 +61,13 @@ before first paint so there is no flash of the wrong palette.
 
 **Geometry.** One radius token (`--r: 2px`) is the only rounding anywhere, buttons
 and media included. Sharp geometry is doing the editorial work.
+
+**Marketing section.** Two bodies of work, two treatments. The JDG Golden Summer
+collateral is a campaign, so eleven pieces sit in a grid that reads like a contact
+sheet. The FBLA and SGA pieces stay in a horizontal rail, which suits four items and
+would be tedious at eleven. Both feed the same lightbox. The section carries a top
+level nav entry, since it is the first thing a communications or marketing recruiter
+looks for, and it is cross-linked from the JDG rebrand case study in both directions.
 
 **Motion.** Deliberately restrained, and every piece has a job: scroll reveals
 sequence a section so the headline lands before the supporting copy, the counters

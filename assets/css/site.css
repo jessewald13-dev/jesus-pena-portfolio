@@ -601,9 +601,44 @@ button { font: inherit; color: inherit; }
 
 /* Sheets sit in equal frames, like mounted prints, so the artwork keeps
    its own proportions while every caption lands on the same baseline. */
-.sheet { flex: 0 0 min(360px, 76vw); scroll-snap-align: start; }
+.rail .sheet { flex: 0 0 min(360px, 76vw); scroll-snap-align: start; }
+
+/* Group headings inside the marketing section. Deliberately serif headings
+   rather than uppercase labels, so the page does not gain another eyebrow. */
+.group { margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
+.group__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.35rem, 1.1rem + .9vw, 1.85rem);
+  letter-spacing: -.015em; line-height: 1.2;
+}
+.group__sub { margin-top: .7rem; color: var(--muted); font-size: .97rem; max-width: 56ch; }
+.group .link { margin-top: 1rem; }
+.rail__head .group__title + .group__sub { margin-top: .7rem; }
+
+/* Campaign collateral reads as a contact sheet, so it gets a grid rather
+   than a rail. Eleven pieces is too many to click through one at a time. */
+.sheets {
+  display: grid;
+  /* 240px lands on 4 columns at full width, so 11 pieces fall 4/4/3 rather
+     than leaving a single orphan on the last row */
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: clamp(1rem, 2vw, 1.6rem);
+  margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
+}
+.sheets .sheet__btn { height: clamp(230px, 24vw, 330px); }
+.sheets .sheet__cap { font-size: .82rem; margin-top: .7rem; }
+
+/* Two up on phones: eleven full-width tiles is a needlessly long scroll */
+@media (max-width: 620px) {
+  .sheets { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; }
+  .sheets .sheet__btn { height: 62vw; padding: 10px; }
+  .sheets .sheet__cap { font-size: .76rem; margin-top: .5rem; }
+}
 .sheet__btn {
-  display: grid; place-items: center;
+  /* a plain block, not a grid: a percentage height on a grid item does not
+     resolve against the grid area here, which left the image at its auto
+     height and overflowing the frame. object-fit does the centring anyway. */
+  display: block;
   width: 100%; height: clamp(300px, 34vw, 440px);
   padding: clamp(14px, 2vw, 22px); border: 0; cursor: zoom-in;
   background: var(--surface);
@@ -613,7 +648,11 @@ button { font: inherit; color: inherit; }
 }
 .sheet__btn:hover { transform: translateY(-4px); }
 .sheet__btn:active { transform: translateY(0); }
-.sheet__btn img { max-width: 100%; max-height: 100%; width: auto; object-fit: contain; }
+/* Explicit width AND height, then let object-fit letterbox. A percentage
+   max-height does not resolve against an indefinite grid area, so the
+   max-width/max-height pairing silently let tall artwork overflow the
+   frame and get clipped by the button's overflow: hidden. */
+.sheet__btn img { width: 100%; height: 100%; object-fit: contain; }
 .sheet__cap { margin-top: 1rem; font-size: .87rem; color: var(--muted); line-height: 1.5; }
 .sheet__cap b { display: block; color: var(--ink); font-weight: 500; margin-bottom: .15rem; }
 
