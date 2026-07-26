@@ -20,23 +20,17 @@ closer to how it will behave when deployed.
 The whole site is static files, so it drops onto GitHub Pages, Netlify, Vercel,
 Cloudflare Pages or any bucket with no configuration. There is nothing to compile.
 
-## Before you publish
+## Still pending
 
-**The resume PDF is not in the repo yet.** Links in the nav, the hero and the
-contact section all point at `assets/jesus-pena-jr-resume.pdf`. Drop the PDF at that
-exact path and every link starts working. Until then those links 404.
+Two assets are still placeholders, both left out rather than faked:
 
-Two other things the content draft flagged as pending, both currently left out
-rather than faked:
-
-- **A screenshot of utrgvfbla.com.** There is a `TODO` comment in the Featured
-  Build section marking where it goes. The leaderboard or QR check-in view would
-  be the strongest choice. A `1600x1000` image dropped in and referenced there
-  will fill the right-hand column.
+- **Screenshots of utrgvfbla.com.** There is a `TODO` comment in the Featured
+  Build section marking where they go. The homepage hero and the leadership
+  dashboard are the two strongest choices.
 - **A dedicated headshot.** The hero currently uses the FBLA National Headquarters
-  photo, cropped to 4:5. If a proper studio headshot arrives, replace
-  `assets/img/portrait.jpg` (1400x1750) and `assets/img/portrait-sm.jpg` (700x875)
-  and nothing else needs to change.
+  photo, cropped to 4:5. To swap in a studio headshot, replace
+  `assets/img/portrait.jpg` (1400x1750) and `assets/img/portrait-sm.jpg` (700x875);
+  nothing else needs to change.
 
 ## Structure
 
@@ -83,11 +77,3 @@ the counters render their final values straight from the markup.
 **Accessibility.** Skip link, visible focus rings, a real focus trap plus `Escape`
 and arrow-key handling in the lightbox, `aria-expanded` on the mobile menu,
 descriptive alt text on every image, and text that clears WCAG AA in both themes.
-
-## A note on one caption
-
-The photo captioned "UTRGV Student Government Association, campus session" was
-described in the content draft as an SGA Senate meeting, but the photo shows a
-conference-room session with a Global Vaquero Distinction slide on screen. The
-caption was written to match what is visible. Worth a correction if the original
-description was right.
