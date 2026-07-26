@@ -20,18 +20,6 @@ closer to how it will behave when deployed.
 The whole site is static files, so it drops onto GitHub Pages, Netlify, Vercel,
 Cloudflare Pages or any bucket with no configuration. There is nothing to compile.
 
-## Still pending
-
-Two assets are still placeholders, both left out rather than faked:
-
-- **Screenshots of utrgvfbla.com.** There is a `TODO` comment in the Featured
-  Build section marking where they go. The homepage hero and the leadership
-  dashboard are the two strongest choices.
-- **A dedicated headshot.** The hero currently uses the FBLA National Headquarters
-  photo, cropped to 4:5. To swap in a studio headshot, replace
-  `assets/img/portrait.jpg` (1400x1750) and `assets/img/portrait-sm.jpg` (700x875);
-  nothing else needs to change.
-
 ## Structure
 
 ```
@@ -44,7 +32,13 @@ assets/img/                 photography and design work, web-optimized
 
 Images ship in two sizes: `-sm` for grid and thumbnail use, full size for the
 lightbox and larger layouts, wired up through `srcset`. The originals were 2 to 3 MB
-each; the whole `assets/img` directory is now around 6 MB.
+each; the whole `assets/img` directory is now around 6.5 MB.
+
+The hero portrait is the one exception. It is a WebP with an alpha channel, cut
+out of the studio white so it floats on the paper instead of sitting in a white
+box. WebP because the same cutout as PNG is 2.2 MB against 172 KB. Its bottom is
+masked into a soft fade, since the studio frame crops him off flat and a hard
+horizontal edge under a floating figure reads as an amputation.
 
 ## Design notes
 

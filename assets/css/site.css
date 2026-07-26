@@ -21,6 +21,9 @@
   --accent-ink:  #ffffff;
   --accent-wash: rgba(35, 64, 200, .08);
 
+  /* halo behind the cutout portrait: invisible on light paper, warm on dark */
+  --portrait-halo: rgba(239, 233, 220, 0);
+
   --r: 2px;
   --shadow-sm: 0 1px 2px rgba(70, 58, 34, .07);
   --shadow-lg: 0 2px 4px rgba(70, 58, 34, .06), 0 24px 48px -24px rgba(70, 58, 34, .34);
@@ -55,6 +58,8 @@
     --accent-ink:  #12100b;
     --accent-wash: rgba(140, 162, 255, .12);
 
+    --portrait-halo: rgba(239, 233, 220, .17);
+
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, .45);
     --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 24px 48px -24px rgba(0, 0, 0, .8);
   }
@@ -73,6 +78,8 @@
   --accent:      #8ca2ff;
   --accent-ink:  #12100b;
   --accent-wash: rgba(140, 162, 255, .12);
+
+  --portrait-halo: rgba(239, 233, 220, .17);
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .45);
   --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 24px 48px -24px rgba(0, 0, 0, .8);
@@ -278,9 +285,9 @@ button { font: inherit; color: inherit; }
 .hero { padding-block: clamp(2.5rem, 6vh, 5rem) clamp(3rem, 8vh, 6rem); }
 .hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: center;
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: end;
   min-height: calc(100dvh - var(--nav-h) - 9rem);
 }
 .hero__eyebrow {
@@ -316,17 +323,26 @@ button { font: inherit; color: inherit; }
 }
 .hero__cta { display: flex; flex-wrap: wrap; gap: .75rem; }
 
-.hero__figure { margin: 0; position: relative; }
+/* The portrait is a transparent cutout, so it floats on the paper with no
+   frame. Two things make that work:
+   1. a soft bottom fade, because the studio frame cuts him off flat and a
+      hard horizontal edge on a floating figure reads as an amputation;
+   2. a warm halo that only appears in dark mode, or the black suit sinks
+      into the page and all that reads is a face and two hands. */
+.hero__copy { align-self: center; padding-block: 1rem; }
+.hero__figure { margin: 0; position: relative; isolation: isolate; align-self: end; }
+.hero__figure::before {
+  content: ""; position: absolute; z-index: -1; inset: 8% -4% 0;
+  background: radial-gradient(58% 54% at 54% 52%,
+    var(--portrait-halo) 0%,
+    color-mix(in srgb, var(--portrait-halo) 45%, transparent) 46%,
+    rgba(239, 233, 220, 0) 78%);
+  pointer-events: none;
+}
 .hero__figure img {
   width: 100%;
-  border-radius: var(--r);
-  box-shadow: var(--shadow-lg);
-  aspect-ratio: 4 / 5; object-fit: cover;
-}
-.hero__figure figcaption {
-  margin-top: 1rem; padding-left: 1rem;
-  border-left: 2px solid var(--accent);
-  font-size: .84rem; line-height: 1.45; color: var(--muted); max-width: 34ch;
+  -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 99%);
+          mask-image: linear-gradient(to bottom, #000 82%, transparent 99%);
 }
 
 @media (max-width: 900px) {
@@ -472,6 +488,30 @@ button { font: inherit; color: inherit; }
 .build__specs .mono { font-size: .78rem; opacity: .72; }
 
 @media (max-width: 860px) { .build__grid { grid-template-columns: 1fr; } }
+
+/* Proof of the claim, sitting inside the accent block */
+.build__shots {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  margin-top: clamp(3rem, 6vw, 4.5rem);
+}
+.build__shot { margin: 0; }
+.build__shotbtn {
+  display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in;
+  border-radius: var(--r); overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .18), 0 30px 60px -28px rgba(0, 0, 0, .55);
+  transition: transform .35s var(--ease);
+}
+.build__shotbtn:hover { transform: translateY(-4px); }
+.build__shotbtn:active { transform: translateY(0); }
+/* The two captures differ by a few pixels in height. Locking one ratio
+   keeps their captions on a shared baseline. */
+.build__shotbtn img { width: 100%; aspect-ratio: 1.3; object-fit: cover; object-position: top; }
+.build__shot figcaption {
+  margin-top: .9rem; font-size: .86rem; line-height: 1.5; opacity: .82; max-width: 44ch;
+}
+
+@media (max-width: 760px) { .build__shots { grid-template-columns: 1fr; } }
 
 /* ---------- case studies ---------- */
 .cs { border-top: 1px solid var(--line); padding-block: clamp(3rem, 6vw, 4.5rem); }

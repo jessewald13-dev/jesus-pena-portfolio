@@ -12,7 +12,7 @@
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Jesus Pena Jr., Business Strategy &amp; Communications">
 <meta property="og:description" content="Business strategy and communications student turning data into decisions, at UTRGV and beyond.">
-<meta property="og:image" content="assets/img/portrait.jpg">
+<meta property="og:image" content="assets/img/og.jpg">
 <meta name="twitter:card" content="summary_large_image">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%232340C8'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='19' fill='%23fff' text-anchor='middle'%3EJ%3C/text%3E%3C/svg%3E">
@@ -22,7 +22,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="assets/fonts/phosphor.css">
 <link rel="stylesheet" href="assets/css/site.css">
-<link rel="preload" as="image" href="assets/img/portrait.jpg" imagesrcset="assets/img/portrait-sm.jpg 700w, assets/img/portrait.jpg 1400w" imagesizes="(max-width: 900px) 90vw, 40vw">
+<link rel="preload" as="image" href="assets/img/portrait.webp" imagesrcset="assets/img/portrait-sm.webp 620w, assets/img/portrait.webp 1200w" imagesizes="(max-width: 900px) 78vw, 40vw">
 
 <script>
   // Set the theme before first paint so there is no flash of the wrong palette.
@@ -94,12 +94,11 @@
 
     <figure class="hero__figure reveal" style="--d:120ms">
       <img
-        src="assets/img/portrait.jpg"
-        srcset="assets/img/portrait-sm.jpg 700w, assets/img/portrait.jpg 1400w"
-        sizes="(max-width: 900px) 88vw, 38vw"
-        width="1400" height="1750" fetchpriority="high" decoding="async"
-        alt="Jesus Pena Jr. in a navy suit and FBLA tie, seated in front of the FBLA sign at the organization's national headquarters.">
-      <figcaption>FBLA National Headquarters, after election to National Collegiate Vice President of Communications.</figcaption>
+        src="assets/img/portrait.webp"
+        srcset="assets/img/portrait-sm.webp 620w, assets/img/portrait.webp 1200w"
+        sizes="(max-width: 900px) 78vw, 40vw"
+        width="1200" height="1640" fetchpriority="high" decoding="async"
+        alt="Jesus Pena Jr., seated portrait in a black suit, checked shirt and burgundy tie.">
     </figure>
   </div>
 </section>
@@ -258,8 +257,34 @@
       <li><span class="mono">03</span> Automated points and leaderboard</li>
       <li><span class="mono">04</span> Officer administration</li>
     </ul>
-    <!-- TODO: platform screenshot, 1600x1000, leaderboard or QR check-in view.
-         Deliberately left out rather than faked with styled divs. -->
+  </div>
+
+  <div class="wrap build__shots">
+    <figure class="build__shot reveal">
+      <button class="build__shotbtn" type="button" data-lightbox
+              data-full="assets/img/build-homepage.jpg"
+              data-caption="utrgvfbla.com, the public chapter site: competitive event matching, applications and chapter news.">
+        <img src="assets/img/build-homepage-sm.jpg"
+             srcset="assets/img/build-homepage-sm.jpg 820w, assets/img/build-homepage.jpg 1600w"
+             sizes="(max-width: 760px) 88vw, 45vw"
+             width="820" height="640" loading="lazy" decoding="async"
+             alt="The utrgvfbla.com homepage, a dark navy hero reading Discover Your Competitive Advantage with Find My Event and Follow UTRGV FBLA buttons, above a chapter news section.">
+      </button>
+      <figcaption>The public site. Members find the competitive event that fits them, then apply.</figcaption>
+    </figure>
+
+    <figure class="build__shot reveal" style="--d:90ms">
+      <button class="build__shotbtn" type="button" data-lightbox
+              data-full="assets/img/build-dashboard.jpg"
+              data-caption="The officer dashboard: submission counts, event and major breakdowns, and a roster with match scores and CSV export. Member names redacted.">
+        <img src="assets/img/build-dashboard-sm.jpg"
+             srcset="assets/img/build-dashboard-sm.jpg 820w, assets/img/build-dashboard.jpg 1600w"
+             sizes="(max-width: 760px) 88vw, 45vw"
+             width="820" height="626" loading="lazy" decoding="async"
+             alt="The leadership tools dashboard showing nine students matched, breakdowns of most claimed events, majors and career goals, and a roster table with match percentages and a CSV export button.">
+      </button>
+      <figcaption>The officer side. Match scoring, roster filters and CSV export. Member names redacted here.</figcaption>
+    </figure>
   </div>
 </section>
 
