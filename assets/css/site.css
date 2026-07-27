@@ -17,12 +17,30 @@
   --line:       rgba(25, 23, 18, .16);
   --line-soft:  rgba(25, 23, 18, .08);
 
-  --accent:      #2340c8;
-  --accent-ink:  #ffffff;
-  --accent-wash: rgba(35, 64, 200, .08);
+  /* Brand constants, sampled from utrgvfbla.com and the SGA flyers:
+     the navy behind the site hero and the gold of its Apply Now button. */
+  --navy:   #07182a;
+  --navy-2: #0d2544;
+  --gold:   #e1ac30;
 
-  /* halo behind the cutout portrait: invisible on light paper, warm on dark */
-  --portrait-halo: rgba(239, 233, 220, 0);
+  /* Gold is a dark-surface colour in this brand: in the flyers and on the
+     site it sits on navy 60-70% of the time, and #e1ac30 on cream is only
+     1.8:1, too weak even for a hairline. So gold appears as TYPE on cream
+     only in this deepened cut, which clears AA on paper, the tinted band,
+     the surface and the role pills. Brand gold stays for navy grounds and
+     for button fills, where navy text rides on top of it. */
+  --gold-ink: #8a5a07;
+
+  --accent:      var(--gold-ink);
+  --accent-ink:  var(--navy);
+  --accent-wash: rgba(138, 90, 7, .09);
+
+  /* the budget figure: navy carries the wasted mass, gold the part that worked */
+  --viz-mass: var(--navy);
+
+  /* warm halo behind the cutout portrait: the hero is navy in both themes,
+     so the black suit always needs something to sit against */
+  --portrait-halo: rgba(239, 233, 220, .17);
 
   --r: 2px;
   --shadow-sm: 0 1px 2px rgba(70, 58, 34, .07);
@@ -45,20 +63,20 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper:      #16140f;
-    --paper-deep: #1d1a14;
-    --surface:    #211d16;
-    --ink:        #f1ece1;
-    --ink-2:      #d6cfc1;
-    --muted:      #a49b8c;
-    --line:       rgba(241, 236, 225, .17);
-    --line-soft:  rgba(241, 236, 225, .09);
+    --paper:      #07182a;
+    --paper-deep: #0b1f35;
+    --surface:    #102941;
+    --ink:        #f2ede2;
+    --ink-2:      #dbd3c5;
+    --muted:      #98a4b5;
+    --line:       rgba(242, 237, 226, .18);
+    --line-soft:  rgba(242, 237, 226, .09);
 
-    --accent:      #8ca2ff;
-    --accent-ink:  #12100b;
-    --accent-wash: rgba(140, 162, 255, .12);
-
-    --portrait-halo: rgba(239, 233, 220, .17);
+    /* on navy the brand gold needs no deepening: 8.65:1 */
+    --accent:      var(--gold);
+    --accent-ink:  var(--navy);
+    --accent-wash: rgba(225, 172, 48, .14);
+    --viz-mass:    #cdd5df;
 
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, .45);
     --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 24px 48px -24px rgba(0, 0, 0, .8);
@@ -66,20 +84,20 @@
 }
 
 :root[data-theme="dark"] {
-  --paper:      #16140f;
-  --paper-deep: #1d1a14;
-  --surface:    #211d16;
-  --ink:        #f1ece1;
-  --ink-2:      #d6cfc1;
-  --muted:      #a49b8c;
-  --line:       rgba(241, 236, 225, .17);
-  --line-soft:  rgba(241, 236, 225, .09);
+  --paper:    #07182a;
+  --paper-deep: #0b1f35;
+  --surface:  #102941;
+  --ink:    #f2ede2;
+  --ink-2:    #dbd3c5;
+  --muted:    #98a4b5;
+  --line:     rgba(242, 237, 226, .18);
+  --line-soft:  rgba(242, 237, 226, .09);
 
-  --accent:      #8ca2ff;
-  --accent-ink:  #12100b;
-  --accent-wash: rgba(140, 162, 255, .12);
-
-  --portrait-halo: rgba(239, 233, 220, .17);
+  /* on navy the brand gold needs no deepening: 8.65:1 */
+  --accent:    var(--gold);
+  --accent-ink:  var(--navy);
+  --accent-wash: rgba(225, 172, 48, .14);
+  --viz-mass:  #cdd5df;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, .45);
   --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 24px 48px -24px rgba(0, 0, 0, .8);
@@ -115,7 +133,7 @@ button { font: inherit; color: inherit; }
 
 .skip-link {
   position: absolute; left: 12px; top: -60px; z-index: 100;
-  background: var(--accent); color: var(--accent-ink);
+  background: var(--gold); color: var(--navy);
   padding: 10px 16px; border-radius: var(--r); text-decoration: none;
   transition: top .2s var(--ease);
 }
@@ -169,7 +187,13 @@ button { font: inherit; color: inherit; }
 }
 .prose .lede em { font-size: 1em; color: var(--accent); }
 
-/* ---------- buttons ---------- */
+/* ---------- buttons ----------
+   One primary treatment everywhere: the utrgvfbla.com Apply Now button,
+   brand gold with navy type. It reads on cream and on navy alike, and it
+   sidesteps the wash-out problem entirely, because the gold is a fill with
+   dark type on it rather than gold type on a light ground. The hairline
+   gives the fill a defined edge on cream, where gold alone is only 1.8:1
+   against the paper. */
 .btn {
   display: inline-flex; align-items: center; gap: .5em;
   white-space: nowrap;
@@ -184,14 +208,15 @@ button { font: inherit; color: inherit; }
 .btn .ph { font-size: 1.05em; }
 .btn:active { transform: translateY(1px); }
 
-.btn--solid { background: var(--accent); color: var(--accent-ink); }
-.btn--solid:hover { background: color-mix(in srgb, var(--accent) 86%, var(--ink)); }
+.btn--solid {
+  background: var(--gold); color: var(--navy);
+  border-color: rgba(7, 24, 42, .24);
+}
+.btn--solid:hover { background: color-mix(in srgb, var(--gold) 88%, var(--navy)); }
 
 .btn--ghost { background: transparent; color: var(--ink); border-color: var(--line); }
 .btn--ghost:hover { border-color: var(--ink); background: var(--accent-wash); }
 
-.btn--invert { background: var(--accent-ink); color: var(--accent); }
-.btn--invert:hover { background: color-mix(in srgb, var(--accent-ink) 88%, var(--accent)); }
 
 .iconbtn {
   display: inline-grid; place-items: center;
@@ -203,6 +228,8 @@ button { font: inherit; color: inherit; }
 }
 .iconbtn .ph { font-size: 1.2rem; }
 .iconbtn:hover { color: var(--ink); background: var(--accent-wash); }
+.nav__utils .iconbtn { color: var(--nav-fg); transition: color .3s var(--ease), background-color .2s var(--ease); }
+.nav__utils .iconbtn:hover { color: var(--nav-fg-strong); background: color-mix(in srgb, var(--nav-fg-strong) 12%, transparent); }
 .iconbtn--bordered { border-color: var(--line); background: var(--surface); color: var(--ink); }
 .iconbtn--bordered:hover { border-color: var(--ink); }
 .iconbtn[disabled] { opacity: .35; pointer-events: none; }
@@ -211,18 +238,35 @@ button { font: inherit; color: inherit; }
 /* ---------- nav ---------- */
 #top-sentinel { position: absolute; top: 0; height: 1px; width: 1px; }
 
+/* The bar sits above the hero in flow rather than over it, so at the top it
+   carries the navy itself and reads as one masthead with the hero beneath.
+   Once you scroll into the cream body it resolves into a paper bar. Two
+   token sets, swapped on the .is-stuck class the sentinel already drives. */
 .nav {
+  --nav-fg: #aab6c6;
+  --nav-fg-strong: #f2ede2;
+  --nav-accent: var(--gold);
+  --nav-panel: var(--navy);
+  --nav-rule: rgba(242, 237, 226, .14);
   position: sticky; top: 0; z-index: var(--z-nav);
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  background: var(--navy);
   border-bottom: 1px solid transparent;
   transition: border-color .3s var(--ease), background-color .3s var(--ease);
 }
-@media (prefers-reduced-transparency: reduce) {
-  .nav { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+.nav.is-stuck {
+  --nav-fg: var(--muted);
+  --nav-fg-strong: var(--ink);
+  --nav-accent: var(--accent);
+  --nav-panel: var(--paper);
+  --nav-rule: var(--line-soft);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom-color: var(--line);
 }
-.nav.is-stuck { border-bottom-color: var(--line); }
+@media (prefers-reduced-transparency: reduce) {
+  .nav.is-stuck { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
 
 .nav__inner {
   max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter);
@@ -236,7 +280,7 @@ button { font: inherit; color: inherit; }
 .nav__mark {
   display: grid; place-items: center;
   width: 28px; height: 28px;
-  background: var(--accent); color: var(--accent-ink);
+  background: var(--gold); color: var(--navy);
   font-family: var(--font-display); font-size: 1rem; line-height: 1;
   border-radius: var(--r);
   padding-top: 2px;
@@ -244,22 +288,24 @@ button { font: inherit; color: inherit; }
 .nav__name {
   font-family: var(--font-display);
   font-size: 1.06rem; letter-spacing: -.01em; white-space: nowrap;
+  color: var(--nav-fg-strong);
+  transition: color .3s var(--ease);
 }
 
 .nav__links { display: flex; align-items: center; gap: 1.6rem; }
 .nav__links a {
   position: relative;
-  font-size: .92rem; color: var(--muted); text-decoration: none;
+  font-size: .92rem; color: var(--nav-fg); text-decoration: none;
   white-space: nowrap;
   transition: color .2s var(--ease);
 }
 .nav__links a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px;
-  background: var(--accent); transform: scaleX(0); transform-origin: left;
+  background: var(--nav-accent); transform: scaleX(0); transform-origin: left;
   transition: transform .3s var(--ease);
 }
-.nav__links a:hover { color: var(--ink); }
-.nav__links a.is-active { color: var(--ink); }
+.nav__links a:hover { color: var(--nav-fg-strong); }
+.nav__links a.is-active { color: var(--nav-fg-strong); }
 .nav__links a.is-active::after { transform: scaleX(1); }
 
 .nav__utils { display: flex; align-items: center; gap: .1rem; flex-shrink: 0; }
@@ -271,18 +317,42 @@ button { font: inherit; color: inherit; }
   .nav__links {
     position: fixed; inset: var(--nav-h) 0 auto 0; z-index: var(--z-menu);
     flex-direction: column; align-items: stretch; gap: 0;
-    background: var(--paper); border-bottom: 1px solid var(--line);
+    background: var(--nav-panel); border-bottom: 1px solid var(--nav-rule);
     padding: .5rem var(--gutter) 1.5rem;
     transform: translateY(-8px); opacity: 0; pointer-events: none;
     transition: opacity .25s var(--ease), transform .25s var(--ease);
   }
   .nav__links.is-open { transform: none; opacity: 1; pointer-events: auto; }
-  .nav__links a { padding: .9rem 0; font-size: 1.05rem; border-bottom: 1px solid var(--line-soft); }
+  .nav__links a { padding: .9rem 0; font-size: 1.05rem; color: var(--nav-fg-strong);
+    border-bottom: 1px solid var(--nav-rule); }
   .nav__links a::after { display: none; }
 }
 
+/* ---------- navy grounds ----------
+   The hero and the Featured Build block are the two moments that carry the
+   weight the flyers do, so they run navy in BOTH themes. They redeclare the
+   surface tokens locally, which means every component inside them (links,
+   ghost buttons, hairlines, muted text) re-themes without a single override. */
+.hero, .build {
+  --paper:       var(--navy);
+  --paper-deep:  var(--navy-2);
+  --surface:     #102941;
+  --ink:         #f2ede2;
+  --ink-2:       #dbd3c5;
+  --muted:       #98a4b5;
+  --line:        rgba(242, 237, 226, .22);
+  --line-soft:   rgba(242, 237, 226, .11);
+  --accent:      var(--gold);
+  --accent-ink:  var(--navy);
+  --accent-wash: rgba(225, 172, 48, .14);
+  color: var(--ink);
+}
+
 /* ---------- hero ---------- */
-.hero { padding-block: clamp(2.5rem, 6vh, 5rem) clamp(3rem, 8vh, 6rem); }
+.hero {
+  background: var(--navy);
+  padding-block: clamp(2.5rem, 6vh, 5rem) clamp(3rem, 8vh, 6rem);
+}
 .hero__grid {
   display: grid;
   grid-template-columns: minmax(0, 1.06fr) minmax(0, .94fr);
@@ -443,9 +513,11 @@ button { font: inherit; color: inherit; }
   .tl__loc { display: block; margin-left: 0; margin-top: .2rem; }
 }
 
-/* ---------- featured build (the single color block) ---------- */
+/* ---------- featured build ----------
+   Navy-2 rather than the hero's navy, so the block still separates from the
+   page in dark mode, where the page itself is navy. */
 .build {
-  background: var(--accent); color: var(--accent-ink);
+  background: var(--navy-2);
   padding-block: clamp(4rem, 8vw, 6.5rem);
 }
 .build__grid {
@@ -454,7 +526,7 @@ button { font: inherit; color: inherit; }
 }
 .build__eyebrow {
   font-size: .76rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em;
-  opacity: .72; margin-bottom: 1.4rem;
+  color: var(--accent); margin-bottom: 1.4rem;
 }
 .build__title {
   font-family: var(--font-display);
@@ -465,31 +537,24 @@ button { font: inherit; color: inherit; }
 .build__body {
   margin-top: 1.6rem; max-width: 52ch;
   font-size: clamp(1rem, .95rem + .3vw, 1.12rem);
-  line-height: 1.6; opacity: .88;
+  line-height: 1.6; color: var(--ink-2);
 }
-.build__body strong { font-weight: 500; opacity: 1; }
-.build .btn--invert { margin-top: 2.25rem; }
+.build__body strong { font-weight: 500; color: var(--ink); }
+.build .btn--solid { margin-top: 2.25rem; }
 
-.build__specs { display: grid; gap: 0; border-top: 1px solid rgba(255, 255, 255, .28); }
-:root[data-theme="dark"] .build__specs,
-:root[data-theme="dark"] .build__specs li { border-color: rgba(18, 16, 11, .3); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .build__specs,
-  :root:not([data-theme="light"]) .build__specs li { border-color: rgba(18, 16, 11, .3); }
-}
+.build__specs { display: grid; gap: 0; border-top: 1px solid var(--line); }
 .build__specs li {
   display: flex; align-items: baseline; gap: 1rem;
   padding-block: 1.05rem;
-  border-bottom: 1px solid rgba(255, 255, 255, .28);
+  border-bottom: 1px solid var(--line);
   font-size: .97rem;
+  color: var(--ink);
 }
-/* .72 is the floor here: below it the numerals drop under WCAG AA
-   against the accent block, in both light and dark. */
-.build__specs .mono { font-size: .78rem; opacity: .72; }
+.build__specs .mono { font-size: .78rem; color: var(--accent); }
 
 @media (max-width: 860px) { .build__grid { grid-template-columns: 1fr; } }
 
-/* Proof of the claim, sitting inside the accent block */
+/* Proof of the claim, sitting inside the navy block */
 .build__shots {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: clamp(1.25rem, 3vw, 2.5rem);
@@ -499,7 +564,7 @@ button { font: inherit; color: inherit; }
 .build__shotbtn {
   display: block; width: 100%; padding: 0; border: 0; background: none; cursor: zoom-in;
   border-radius: var(--r); overflow: hidden;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .18), 0 30px 60px -28px rgba(0, 0, 0, .55);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .3), 0 30px 60px -28px rgba(0, 0, 0, .75);
   transition: transform .35s var(--ease);
 }
 .build__shotbtn:hover { transform: translateY(-4px); }
@@ -508,7 +573,7 @@ button { font: inherit; color: inherit; }
    keeps their captions on a shared baseline. */
 .build__shotbtn img { width: 100%; aspect-ratio: 1.3; object-fit: cover; object-position: top; }
 .build__shot figcaption {
-  margin-top: .9rem; font-size: .86rem; line-height: 1.5; opacity: .82; max-width: 44ch;
+  margin-top: .9rem; font-size: .86rem; line-height: 1.5; color: var(--muted); max-width: 44ch;
 }
 
 @media (max-width: 760px) { .build__shots { grid-template-columns: 1fr; } }
@@ -550,16 +615,22 @@ button { font: inherit; color: inherit; }
   font-size: .74rem; font-weight: 500; text-transform: uppercase; letter-spacing: .13em;
   color: var(--muted); margin-bottom: .9rem;
 }
-.alloc__bar { display: flex; height: 46px; border-radius: var(--r); overflow: hidden; }
-.alloc__seg { display: block; transition: none; }
-.alloc__seg--waste { background: var(--accent); }
-.alloc__seg--good { background: color-mix(in srgb, var(--accent) 26%, var(--paper)); }
+/* The hairline matters: brand gold is only 1.8:1 against the cream, so the
+   segment's outer edge would otherwise dissolve into the page. Inside the
+   frame the two segments sit 8.6:1 apart from each other. */
+.alloc__bar {
+  display: flex; height: 46px; border-radius: var(--r); overflow: hidden;
+  border: 1px solid var(--line);
+}
+.alloc__seg { display: block; }
+.alloc__seg--waste { background: var(--viz-mass); }
+.alloc__seg--good { background: var(--gold); }
 .alloc__key { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: .9rem; font-size: .87rem; color: var(--muted); }
 .alloc__key li { display: flex; align-items: center; gap: .5rem; }
 .alloc__key b { color: var(--ink); font-weight: 500; }
 .key { width: 11px; height: 11px; border-radius: var(--r); flex-shrink: 0; }
-.key--waste { background: var(--accent); }
-.key--good { background: color-mix(in srgb, var(--accent) 26%, var(--paper)); border: 1px solid var(--line); }
+.key--waste { background: var(--viz-mass); }
+.key--good { background: var(--gold); border: 1px solid var(--line); }
 
 .results { margin: 2.25rem 0 0; border-top: 1px solid var(--line-soft); max-width: 62ch; }
 .results li {
@@ -838,5 +909,6 @@ body.is-locked { overflow: hidden; }
   .nav, .lb, .rail__nav, .skip-link { display: none !important; }
   body { background: #fff; color: #000; }
   .reveal { opacity: 1; transform: none; }
-  .build { background: #fff; color: #000; border: 1px solid #000; }
+  .hero, .build { background: #fff; color: #000; border: 1px solid #000; }
+  .hero *, .build * { color: #000 !important; }
 }

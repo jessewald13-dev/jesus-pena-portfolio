@@ -44,10 +44,32 @@ horizontal edge under a floating figure reads as an amputation.
 
 ## Design notes
 
-**Direction.** Warm neutral paper, one accent, editorial typography. The accent is
-cobalt rather than the usual brass-on-cream, partly to avoid the default warm-craft
-palette and partly because it sits naturally next to the navy and gold in his own
-FBLA and student government design work.
+**Direction.** Navy and gold pulled from his own material, over warm editorial
+paper. The two brand constants are sampled rather than guessed: `#07182a` is the
+navy behind the utrgvfbla.com hero, `#e1ac30` is the gold of its Apply Now button.
+The SGA flyers land in the same family (`#103677` navy, `#eeb157` gold).
+
+**Where gold can live.** Gold is a dark-surface colour in this brand, and not by
+accident: measured against the source art, it sits on a dark surround 71% of the
+time in the SGA flyer and 56% on the site. The maths agrees. `#e1ac30` on the cream
+paper is 1.8:1, too weak even for a hairline, let alone type. So gold appears three
+ways, never as bright gold type on cream:
+
+- on navy grounds, as `#e1ac30`, where it runs 8.6:1
+- as a fill, in the one primary button treatment, brand gold with navy type on it
+- on cream as type, in a deepened cut `#8a5a07`, the most chromatic value at that
+  hue that still clears AA against the paper, the tinted band, the surface and the
+  role pills
+
+`--accent` resolves to whichever of those the current surface calls for, so
+components do not need to know which ground they are sitting on.
+
+**Navy grounds.** The masthead, the hero and the Featured Build block run navy in
+both themes. They redeclare the surface tokens locally, so every component inside
+them re-themes with no per-component overrides. The body keeps warm cream and the
+Newsreader serif headings, which is what stops the whole thing reading as generic
+corporate navy and gold: the navy is used for two deliberate moments, not as a
+default page colour.
 
 **Type.** Newsreader for display and long-form lede copy, Geist for interface and
 body, Geist Mono for figures and dates. Loaded from Google Fonts with `preconnect`
