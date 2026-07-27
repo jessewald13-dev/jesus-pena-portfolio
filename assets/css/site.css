@@ -1,21 +1,24 @@
 /* ============================================================
    Jesus Pena Jr. - portfolio
-   Warm editorial print language. One accent (cobalt). All-sharp
-   geometry: a single 2px radius token is the only rounding on
-   the page, including buttons and media.
+
+   Corporate-modern shell over a sampled navy and gold brand.
+   Cool neutral page, white cards, one 8px radius, one spacing
+   scale. Newsreader is held back to two jobs: the hero name and
+   the serif section-divider label. Geist carries every header
+   and all body copy.
    ============================================================ */
 
 /* ---------- tokens ---------- */
 :root {
-  /* light is the default expression of the brief: warm neutral paper */
-  --paper:      #f4f0e8;
-  --paper-deep: #ece7db;   /* tinted section bands, same family */
-  --surface:    #fbf9f5;
-  --ink:        #191712;
-  --ink-2:      #3d372e;
-  --muted:      #6e675c;
-  --line:       rgba(25, 23, 18, .16);
-  --line-soft:  rgba(25, 23, 18, .08);
+  /* cool neutral shell: off-white page, a deeper band, white cards */
+  --paper:      #f4f6f9;
+  --paper-deep: #eaeef3;
+  --surface:    #ffffff;
+  --ink:        #0f1724;
+  --ink-2:      #37414f;
+  --muted:      #5f6b7c;
+  --line:       rgba(15, 23, 36, .13);
+  --line-soft:  rgba(15, 23, 36, .07);
 
   /* Brand constants, sampled from utrgvfbla.com and the SGA flyers:
      the navy behind the site hero and the gold of its Apply Now button. */
@@ -29,11 +32,11 @@
      only in this deepened cut, which clears AA on paper, the tinted band,
      the surface and the role pills. Brand gold stays for navy grounds and
      for button fills, where navy text rides on top of it. */
-  --gold-ink: #8a5a07;
+  --gold-ink: #915c0c;
 
   --accent:      var(--gold-ink);
   --accent-ink:  var(--navy);
-  --accent-wash: rgba(138, 90, 7, .09);
+  --accent-wash: rgba(145, 92, 12, .09);
 
   /* the budget figure: navy carries the wasted mass, gold the part that worked */
   --viz-mass: var(--navy);
@@ -42,9 +45,16 @@
      so the black suit always needs something to sit against */
   --portrait-halo: rgba(239, 233, 220, .17);
 
-  --r: 2px;
-  --shadow-sm: 0 1px 2px rgba(70, 58, 34, .07);
-  --shadow-lg: 0 2px 4px rgba(70, 58, 34, .06), 0 24px 48px -24px rgba(70, 58, 34, .34);
+  --r: 8px;
+  --shadow-sm: 0 1px 2px rgba(15, 23, 36, .05);
+  --shadow-card: 0 1px 2px rgba(15, 23, 36, .05), 0 8px 24px -14px rgba(15, 23, 36, .22);
+  --shadow-lg: 0 2px 4px rgba(15, 23, 36, .07), 0 24px 48px -24px rgba(15, 23, 36, .3);
+
+  /* one spacing scale, used for every vertical rhythm decision */
+  --sp-section: clamp(3.5rem, 6vw, 5.5rem);
+  --sp-block:   clamp(2rem, 3.4vw, 3rem);
+  --sp-card:    clamp(1.5rem, 2.4vw, 2.25rem);
+  --sp-row:     clamp(1.25rem, 2vw, 1.75rem);
 
   --font-display: "Newsreader", Georgia, "Times New Roman", serif;
   --font-sans: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -65,12 +75,12 @@
   :root:not([data-theme="light"]) {
     --paper:      #07182a;
     --paper-deep: #0b1f35;
-    --surface:    #102941;
+    --surface:    #0e2338;
     --ink:        #f2ede2;
     --ink-2:      #dbd3c5;
     --muted:      #98a4b5;
-    --line:       rgba(242, 237, 226, .18);
-    --line-soft:  rgba(242, 237, 226, .09);
+    --line:       rgba(226, 234, 244, .17);
+    --line-soft:  rgba(226, 234, 244, .09);
 
     /* on navy the brand gold needs no deepening: 8.65:1 */
     --accent:      var(--gold);
@@ -78,7 +88,8 @@
     --accent-wash: rgba(225, 172, 48, .14);
     --viz-mass:    #cdd5df;
 
-    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .45);
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-card: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -14px rgba(0, 0, 0, .6);
     --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 24px 48px -24px rgba(0, 0, 0, .8);
   }
 }
@@ -86,12 +97,12 @@
 :root[data-theme="dark"] {
   --paper:    #07182a;
   --paper-deep: #0b1f35;
-  --surface:  #102941;
-  --ink:    #f2ede2;
-  --ink-2:    #dbd3c5;
-  --muted:    #98a4b5;
-  --line:     rgba(242, 237, 226, .18);
-  --line-soft:  rgba(242, 237, 226, .09);
+  --surface:    #0e2338;
+  --ink:        #f2ede2;
+  --ink-2:      #dbd3c5;
+  --muted:      #98a4b5;
+  --line:       rgba(226, 234, 244, .17);
+  --line-soft:  rgba(226, 234, 244, .09);
 
   /* on navy the brand gold needs no deepening: 8.65:1 */
   --accent:    var(--gold);
@@ -99,7 +110,8 @@
   --accent-wash: rgba(225, 172, 48, .14);
   --viz-mass:  #cdd5df;
 
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .45);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, .4), 0 8px 24px -14px rgba(0, 0, 0, .6);
   --shadow-lg: 0 2px 4px rgba(0, 0, 0, .4), 0 24px 48px -24px rgba(0, 0, 0, .8);
 }
 
@@ -145,13 +157,12 @@ button { font: inherit; color: inherit; }
 
 /* ---------- shared type ---------- */
 .h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 1.2rem + 2.6vw, 3.15rem);
-  line-height: 1.08;
-  letter-spacing: -.02em;
-  font-weight: 400;
-  max-width: 18ch;
-  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+  font-size: clamp(1.6rem, 1.15rem + 1.5vw, 2.35rem);
+  line-height: 1.14;
+  letter-spacing: -.025em;
+  font-weight: 550;
+  max-width: 22ch;
+  margin-bottom: var(--sp-block);
 }
 .micro {
   font-family: var(--font-sans);
@@ -179,11 +190,11 @@ button { font: inherit; color: inherit; }
    a sans paragraph breaks the leading on whichever line it lands. */
 .prose em { font-style: italic; }
 .prose .lede {
-  font-family: var(--font-display);
-  font-size: clamp(1.25rem, 1.05rem + .65vw, 1.6rem);
-  line-height: 1.45;
+  font-size: clamp(1.12rem, 1rem + .45vw, 1.35rem);
+  line-height: 1.5;
   color: var(--ink);
-  letter-spacing: -.005em;
+  letter-spacing: -.012em;
+  font-weight: 420;
 }
 .prose .lede em { font-size: 1em; color: var(--accent); }
 
@@ -238,35 +249,21 @@ button { font: inherit; color: inherit; }
 /* ---------- nav ---------- */
 #top-sentinel { position: absolute; top: 0; height: 1px; width: 1px; }
 
-/* The bar sits above the hero in flow rather than over it, so at the top it
-   carries the navy itself and reads as one masthead with the hero beneath.
-   Once you scroll into the cream body it resolves into a paper bar. Two
-   token sets, swapped on the .is-stuck class the sentinel already drives. */
+/* A persistent navy bar in both themes and at every scroll position. Only
+   the shadow changes on scroll, so the bar reads as a fixed chrome rather
+   than something that transforms under you. */
 .nav {
-  --nav-fg: #aab6c6;
-  --nav-fg-strong: #f2ede2;
+  --nav-fg: #a7b4c6;
+  --nav-fg-strong: #f2f5f9;
   --nav-accent: var(--gold);
   --nav-panel: var(--navy);
-  --nav-rule: rgba(242, 237, 226, .14);
+  --nav-rule: rgba(226, 234, 244, .14);
   position: sticky; top: 0; z-index: var(--z-nav);
   background: var(--navy);
-  border-bottom: 1px solid transparent;
-  transition: border-color .3s var(--ease), background-color .3s var(--ease);
+  border-bottom: 1px solid rgba(226, 234, 244, .10);
+  transition: box-shadow .3s var(--ease);
 }
-.nav.is-stuck {
-  --nav-fg: var(--muted);
-  --nav-fg-strong: var(--ink);
-  --nav-accent: var(--accent);
-  --nav-panel: var(--paper);
-  --nav-rule: var(--line-soft);
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: blur(14px) saturate(140%);
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  border-bottom-color: var(--line);
-}
-@media (prefers-reduced-transparency: reduce) {
-  .nav.is-stuck { background: var(--paper); backdrop-filter: none; -webkit-backdrop-filter: none; }
-}
+.nav.is-stuck { box-shadow: 0 1px 0 rgba(15, 23, 36, .06), 0 6px 20px -12px rgba(15, 23, 36, .35); }
 
 .nav__inner {
   max-width: var(--wrap); margin-inline: auto; padding-inline: var(--gutter);
@@ -286,8 +283,7 @@ button { font: inherit; color: inherit; }
   padding-top: 2px;
 }
 .nav__name {
-  font-family: var(--font-display);
-  font-size: 1.06rem; letter-spacing: -.01em; white-space: nowrap;
+  font-size: .98rem; font-weight: 550; letter-spacing: -.015em; white-space: nowrap;
   color: var(--nav-fg-strong);
   transition: color .3s var(--ease);
 }
@@ -351,7 +347,7 @@ button { font: inherit; color: inherit; }
 /* ---------- hero ---------- */
 .hero {
   background: var(--navy);
-  padding-block: clamp(2.5rem, 6vh, 5rem) clamp(3rem, 8vh, 6rem);
+  padding-block: clamp(2.5rem, 5vh, 4rem) clamp(2.5rem, 6vh, 4.5rem);
 }
 .hero__grid {
   display: grid;
@@ -427,7 +423,7 @@ button { font: inherit; color: inherit; }
 .band {
   border-block: 1px solid var(--line);
   background: var(--paper-deep);
-  padding-block: clamp(2.5rem, 5vw, 3.75rem);
+  padding-block: var(--sp-block);
 }
 .band__grid {
   display: grid; grid-template-columns: repeat(4, 1fr);
@@ -447,26 +443,26 @@ button { font: inherit; color: inherit; }
 @media (max-width: 480px) { .band__grid { grid-template-columns: 1fr; } .stat__label { max-width: none; } }
 
 /* ---------- sections ---------- */
-.section { padding-block: clamp(4.5rem, 9vw, 8rem); }
+.section { padding-block: var(--sp-section); }
 .section--tint { background: var(--paper-deep); border-block: 1px solid var(--line-soft); }
 
 /* ---------- about ---------- */
 .about {
   display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-  gap: clamp(2.5rem, 6vw, 5.5rem);
+  gap: var(--sp-block);
   align-items: start;
 }
 .about__edu { padding-top: .5rem; }
 .about__edu .micro { margin-bottom: 1.75rem; }
 .edu { padding-bottom: 1.6rem; margin-bottom: 1.6rem; border-bottom: 1px solid var(--line-soft); }
 .edu:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
-.edu__school { font-family: var(--font-display); font-size: 1.28rem; line-height: 1.25; letter-spacing: -.01em; }
+.edu__school { font-weight: 550; font-size: 1.28rem; line-height: 1.25; letter-spacing: -.01em; }
 .edu__degree { font-size: .95rem; color: var(--ink-2); margin-top: .3rem; }
 .edu__meta { font-size: .84rem; color: var(--muted); margin-top: .45rem; }
 .edu__note { font-size: .84rem; color: var(--muted); margin-top: .6rem; line-height: 1.5; }
 
 .skills {
-  margin-top: clamp(3.5rem, 7vw, 5.5rem);
+  margin-top: var(--sp-block);
   display: grid; grid-template-columns: repeat(2, 1fr);
   border-top: 1px solid var(--line);
 }
@@ -475,7 +471,7 @@ button { font: inherit; color: inherit; }
 .skills__cell:nth-child(even) { padding-left: 3rem; border-left: 1px solid var(--line-soft); }
 .skills__cell:nth-last-child(-n+2) { border-bottom: 0; padding-bottom: 0; }
 .skills__head {
-  font-family: var(--font-display); font-size: 1.2rem;
+  font-weight: 550; font-size: 1.2rem;
   letter-spacing: -.01em; margin-bottom: .6rem;
 }
 .skills__cell p { font-size: .95rem; color: var(--muted); line-height: 1.55; }
@@ -495,12 +491,12 @@ button { font: inherit; color: inherit; }
 .timeline { display: grid; gap: 0; border-top: 1px solid var(--line); }
 .tl {
   display: grid; grid-template-columns: 150px minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 3.5rem);
-  padding-block: clamp(2rem, 4vw, 2.75rem);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  padding-block: var(--sp-row);
   border-bottom: 1px solid var(--line-soft);
 }
 .tl__when { font-size: .82rem; color: var(--muted); line-height: 1.5; padding-top: .3rem; }
-.tl__role { font-family: var(--font-display); font-size: clamp(1.35rem, 1.1rem + .8vw, 1.85rem); letter-spacing: -.015em; line-height: 1.2; }
+.tl__role { font-weight: 550; font-size: clamp(1.35rem, 1.1rem + .8vw, 1.85rem); letter-spacing: -.015em; line-height: 1.2; }
 .tl__org { font-size: .95rem; color: var(--ink-2); margin-top: .4rem; }
 .tl__loc { color: var(--muted); font-size: .85rem; white-space: nowrap; margin-left: .5rem; }
 .tl__loc .ph { font-size: 1em; margin-right: .15em; }
@@ -518,18 +514,18 @@ button { font: inherit; color: inherit; }
    page in dark mode, where the page itself is navy. */
 .build {
   background: var(--navy-2);
-  padding-block: clamp(4rem, 8vw, 6.5rem);
+  padding-block: var(--sp-section);
 }
 .build__grid {
   display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, .7fr);
-  gap: clamp(2.5rem, 6vw, 5rem); align-items: start;
+  gap: var(--sp-block); align-items: start;
 }
 .build__eyebrow {
   font-size: .76rem; font-weight: 500; text-transform: uppercase; letter-spacing: .16em;
   color: var(--accent); margin-bottom: 1.4rem;
 }
 .build__title {
-  font-family: var(--font-display);
+  font-weight: 560;
   font-size: clamp(2rem, 1.2rem + 3vw, 3.5rem);
   line-height: 1.08; letter-spacing: -.025em;
   max-width: 17ch;
@@ -557,8 +553,8 @@ button { font: inherit; color: inherit; }
 /* Proof of the claim, sitting inside the navy block */
 .build__shots {
   display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  margin-top: clamp(3rem, 6vw, 4.5rem);
+  gap: var(--sp-row);
+  margin-top: var(--sp-block);
 }
 .build__shot { margin: 0; }
 .build__shotbtn {
@@ -579,30 +575,40 @@ button { font: inherit; color: inherit; }
 @media (max-width: 760px) { .build__shots { grid-template-columns: 1fr; } }
 
 /* ---------- case studies ---------- */
-.cs { border-top: 1px solid var(--line); padding-block: clamp(3rem, 6vw, 4.5rem); }
-.cs:first-of-type { border-top: 0; padding-top: 0; }
-.cs__grid {
-  display: grid; grid-template-columns: 220px minmax(0, 1fr);
-  gap: clamp(1.5rem, 4vw, 4rem); align-items: start;
+.cs { padding-block: 0 var(--sp-row); }
+.cs:last-of-type { padding-bottom: 0; }
+.cs__card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-card);
+  padding: var(--sp-card);
 }
-.cs__meta { position: sticky; top: calc(var(--nav-h) + 2rem); }
+.cs__grid {
+  display: grid; grid-template-columns: 200px minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  /* stretch, not start: the meta rule should run the full height of the
+     card rather than stopping under the last line of the meta block */
+  align-items: stretch;
+}
+.cs__meta { padding-right: 1rem; border-right: 1px solid var(--line-soft); }
 .cs__client { font-size: .95rem; font-weight: 500; }
 .cs__role { font-size: .85rem; color: var(--muted); margin-top: .3rem; line-height: 1.45; }
 .cs__year { font-size: .78rem; color: var(--muted); margin-top: .6rem; }
 
 .cs__title {
-  font-family: var(--font-display);
+  font-weight: 560;
   font-size: clamp(1.6rem, 1.2rem + 1.7vw, 2.5rem);
   line-height: 1.14; letter-spacing: -.02em;
   max-width: 20ch; margin-bottom: 2.25rem;
 }
-.cs__steps { display: grid; gap: 1.75rem; max-width: 62ch; }
+.cs__steps { display: grid; gap: 1.35rem; max-width: 64ch; }
 .step h4 {
   font-size: .74rem; font-weight: 500; text-transform: uppercase; letter-spacing: .13em;
   color: var(--accent); margin-bottom: .5rem;
 }
 .step p { color: var(--ink-2); font-size: 1rem; line-height: 1.62; }
-.step--last { margin-top: 1.75rem; max-width: 62ch; }
+.step--last { margin-top: 1.35rem; max-width: 64ch; }
 
 .cs__split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .58fr); gap: clamp(2rem, 4vw, 3rem); align-items: start; }
 .cs__photo { margin: 0; }
@@ -641,8 +647,8 @@ button { font: inherit; color: inherit; }
 .results span { font-size: .93rem; color: var(--muted); line-height: 1.5; }
 
 @media (max-width: 900px) {
-  .cs__grid { grid-template-columns: 1fr; gap: 1.5rem; }
-  .cs__meta { position: static; padding-bottom: 1.25rem; border-bottom: 1px solid var(--line-soft); }
+  .cs__grid { grid-template-columns: 1fr; gap: 1.25rem; }
+  .cs__meta { padding: 0 0 1.1rem; border-right: 0; border-bottom: 1px solid var(--line-soft); }
   .cs__split { grid-template-columns: 1fr; }
   .cs__photo { max-width: 340px; }
   .results li { grid-template-columns: 1fr; gap: .35rem; }
@@ -651,7 +657,7 @@ button { font: inherit; color: inherit; }
 /* ---------- design rail ---------- */
 .rail__head {
   display: flex; align-items: flex-end; justify-content: space-between;
-  gap: 2rem; margin-bottom: clamp(2rem, 4vw, 3rem);
+  gap: 2rem; margin-bottom: var(--sp-row);
 }
 .rail__head .h2 { margin-bottom: .85rem; }
 .rail__sub { color: var(--muted); font-size: .97rem; max-width: 52ch; }
@@ -676,9 +682,9 @@ button { font: inherit; color: inherit; }
 
 /* Group headings inside the marketing section. Deliberately serif headings
    rather than uppercase labels, so the page does not gain another eyebrow. */
-.group { margin-bottom: clamp(1.75rem, 3vw, 2.5rem); }
+.group { margin-bottom: var(--sp-row); }
 .group__title {
-  font-family: var(--font-display);
+  font-weight: 550;
   font-size: clamp(1.35rem, 1.1rem + .9vw, 1.85rem);
   letter-spacing: -.015em; line-height: 1.2;
 }
@@ -694,7 +700,7 @@ button { font: inherit; color: inherit; }
      than leaving a single orphan on the last row */
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: clamp(1rem, 2vw, 1.6rem);
-  margin-bottom: clamp(3.5rem, 7vw, 5.5rem);
+  margin-bottom: var(--sp-block);
 }
 .sheets .sheet__btn { height: clamp(230px, 24vw, 330px); }
 .sheets .sheet__cap { font-size: .82rem; margin-top: .7rem; }
@@ -728,10 +734,16 @@ button { font: inherit; color: inherit; }
 .sheet__cap b { display: block; color: var(--ink); font-weight: 500; margin-bottom: .15rem; }
 
 /* ---------- leadership ---------- */
-.orgs { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.org { padding-block: clamp(2.25rem, 4vw, 3rem); border-bottom: 1px solid var(--line-soft); }
+.orgs { display: grid; gap: var(--sp-row); }
+.org {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-card);
+  padding: var(--sp-card);
+}
 .org__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .5rem 1.25rem; }
-.org__name { font-family: var(--font-display); font-size: clamp(1.5rem, 1.2rem + 1.1vw, 2.1rem); letter-spacing: -.02em; line-height: 1.15; }
+.org__name { font-weight: 550; font-size: clamp(1.22rem, 1.05rem + .7vw, 1.6rem); letter-spacing: -.02em; line-height: 1.2; }
 .org__when { font-size: .8rem; color: var(--muted); }
 .org__roles { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.1rem; }
 .org__roles li {
@@ -762,7 +774,7 @@ button { font: inherit; color: inherit; }
   .org__photo { margin-top: 2rem; max-width: 320px; }
 }
 
-.awards__head { margin: clamp(3.5rem, 6vw, 5rem) 0 1.75rem; font-size: .74rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); display: flex; align-items: center; gap: .5em; }
+.awards__head { margin: var(--sp-block) 0 1.25rem; font-size: .74rem; font-weight: 500; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); display: flex; align-items: center; gap: .5em; }
 .awards__head .ph { font-size: 1.2em; }
 .awards { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: clamp(2rem, 5vw, 4rem); border-top: 1px solid var(--line-soft); }
 .awards li {
@@ -805,7 +817,7 @@ button { font: inherit; color: inherit; }
   letter-spacing: -.02em; color: var(--muted);
   line-height: 1.1; padding-bottom: .1em;
 }
-.outside__item h3 { font-family: var(--font-display); font-size: 1.28rem; letter-spacing: -.01em; margin-bottom: .5rem; }
+.outside__item h3 { font-weight: 550; font-size: 1.15rem; letter-spacing: -.015em; margin-bottom: .5rem; }
 .outside__item p { font-size: .93rem; color: var(--muted); line-height: 1.55; }
 @media (max-width: 860px) { .outside__grid { grid-template-columns: 1fr; gap: 2rem; } }
 
@@ -813,10 +825,10 @@ button { font: inherit; color: inherit; }
 .contact { background: var(--paper-deep); border-top: 1px solid var(--line); }
 .contact__grid {
   display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, .75fr);
-  gap: clamp(2.5rem, 6vw, 5rem); align-items: start;
+  gap: var(--sp-block); align-items: start;
 }
 .contact__title {
-  font-family: var(--font-display);
+  font-weight: 600;
   font-size: clamp(2.75rem, 1.6rem + 4.6vw, 5.25rem);
   line-height: 1.02; letter-spacing: -.035em;
 }
@@ -842,7 +854,7 @@ button { font: inherit; color: inherit; }
 /* ---------- footer ---------- */
 .footer { background: var(--paper-deep); border-top: 1px solid var(--line-soft); padding-block: 2.5rem; }
 .footer__inner { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.5rem; }
-.footer__name { font-family: var(--font-display); font-size: 1.05rem; }
+.footer__name { font-weight: 550; font-size: .98rem; letter-spacing: -.015em; }
 .footer__loc { font-size: .85rem; color: var(--muted); margin-right: auto; }
 .footer__links { display: flex; flex-wrap: wrap; gap: 1.25rem; }
 .footer__links a { font-size: .85rem; color: var(--muted); text-decoration: none; transition: color .2s var(--ease); }
@@ -883,10 +895,13 @@ button { font: inherit; color: inherit; }
 body.is-locked { overflow: hidden; }
 
 /* ---------- scroll reveal ---------- */
+/* Snappy rather than languid: shorter travel, roughly half the duration,
+   and the per-item stagger scaled down in one place rather than by editing
+   every inline --d in the markup. */
 .reveal {
-  opacity: 0; transform: translateY(20px);
-  transition: opacity .75s var(--ease), transform .75s var(--ease);
-  transition-delay: var(--d, 0ms);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .34s var(--ease), transform .34s var(--ease);
+  transition-delay: calc(var(--d, 0ms) * .45);
 }
 .reveal.is-in { opacity: 1; transform: none; }
 

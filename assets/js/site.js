@@ -43,7 +43,7 @@
         meta.name = "theme-color";
         document.head.appendChild(meta);
       }
-      meta.content = isDark ? "#16140f" : "#f4f0e8";
+      meta.content = "#07182a";  // the masthead is navy in both themes
     }
 
     btn.addEventListener("click", function () {
@@ -154,7 +154,7 @@
         entry.target.classList.add("is-in");
         io.unobserve(entry.target);
       });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.15 });
+    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
 
     items.forEach(function (el) { io.observe(el); });
   })();
@@ -182,7 +182,7 @@
         io.unobserve(el);
 
         var target = parseFloat(el.dataset.countTo);
-        var duration = 1300;
+        var duration = 900;
         var start = null;
 
         function tick(now) {
