@@ -78,8 +78,12 @@ figures and dates. Loaded from Google Fonts with `preconnect` and `display=swap`
 **Shell.** Cool neutral page (`#f4f6f9`), a deeper band (`#eaeef3`) and white cards.
 One radius (`--r: 8px`) everywhere, buttons and media included. One spacing scale,
 `--sp-section` / `--sp-block` / `--sp-card` / `--sp-row`, drives every vertical
-rhythm decision rather than each section carrying its own clamp. Case study and
-leadership entries are cards: thin border, shared radius, low shadow. The masthead
+rhythm decision rather than each section carrying its own clamp. Work, case study
+and leadership entries are all cards: thin border, shared radius, low shadow. The
+Work cards keep a rail with a node per entry so the sequence still reads as
+chronological; the node is a 9px box at the shared 8px radius, which resolves to a
+circle rather than introducing a second radius. The rail comes off below 700px,
+where it costs real width and stacked cards already read as a sequence. The masthead
 is navy at every scroll position in both themes; only its shadow changes on scroll,
 so it reads as fixed chrome rather than something that transforms under you.
 

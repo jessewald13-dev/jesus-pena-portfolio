@@ -487,15 +487,48 @@ button { font: inherit; color: inherit; }
   .skills__cell:last-child { border-bottom: 0; padding-bottom: 0; }
 }
 
-/* ---------- timeline ---------- */
-.timeline { display: grid; gap: 0; border-top: 1px solid var(--line); }
-.tl {
-  display: grid; grid-template-columns: 150px minmax(0, 1fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  padding-block: var(--sp-row);
-  border-bottom: 1px solid var(--line-soft);
+/* ---------- timeline ----------
+   Same card language as the case studies and the leadership entries, with a
+   rail and a node per entry so the sequence still reads as chronological
+   rather than as three unrelated cards. */
+.timeline {
+  --rail: clamp(1.5rem, 3vw, 2.5rem);
+  --rail-bg: var(--paper-deep);
+  position: relative;
+  display: grid; gap: var(--sp-row);
+  padding-left: var(--rail);
 }
-.tl__when { font-size: .82rem; color: var(--muted); line-height: 1.5; padding-top: .3rem; }
+.timeline::before {
+  content: ""; position: absolute; z-index: 0;
+  left: 4px; top: 1.75rem; bottom: 1.75rem; width: 2px;
+  background: var(--line);
+  border-radius: var(--r);
+}
+.tl {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: var(--shadow-card);
+  padding: var(--sp-card);
+  display: grid; grid-template-columns: 150px minmax(0, 1fr);
+  gap: clamp(1.25rem, 3vw, 2.75rem);
+  align-items: stretch;
+}
+/* the node. A 9px box at the shared 8px radius resolves to a circle, so the
+   marker stays on the one radius token rather than introducing a second. */
+.tl::before {
+  content: ""; position: absolute; z-index: 1;
+  left: calc(-1 * var(--rail) - 1px); top: calc(var(--sp-card) + .3rem);
+  width: 9px; height: 9px;
+  background: var(--accent);
+  border-radius: var(--r);
+  box-shadow: 0 0 0 4px var(--rail-bg);
+}
+.tl__when {
+  font-size: .82rem; color: var(--muted); line-height: 1.5;
+  padding-right: 1rem; border-right: 1px solid var(--line-soft);
+}
 .tl__role { font-weight: 550; font-size: clamp(1.35rem, 1.1rem + .8vw, 1.85rem); letter-spacing: -.015em; line-height: 1.2; }
 .tl__org { font-size: .95rem; color: var(--ink-2); margin-top: .4rem; }
 .tl__loc { color: var(--muted); font-size: .85rem; white-space: nowrap; margin-left: .5rem; }
@@ -504,8 +537,12 @@ button { font: inherit; color: inherit; }
 .tl .link { margin-top: 1.1rem; }
 
 @media (max-width: 700px) {
-  .tl { grid-template-columns: 1fr; gap: .75rem; }
-  .tl__when { padding-top: 0; }
+  /* the rail costs real width on a phone, and stacked cards already read as
+     a sequence, so it comes off below 700px */
+  .timeline { --rail: 0px; padding-left: 0; }
+  .timeline::before, .tl::before { display: none; }
+  .tl { grid-template-columns: 1fr; gap: .9rem; }
+  .tl__when { padding: 0 0 .9rem; border-right: 0; border-bottom: 1px solid var(--line-soft); }
   .tl__loc { display: block; margin-left: 0; margin-top: .2rem; }
 }
 
