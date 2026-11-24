@@ -3,15 +3,17 @@
    Vanilla JS, no dependencies, no build step.
 
    Motion inventory (each one earns its place):
-     reveal      - sequences content as it enters view, so the eye
-                   lands on the headline before the supporting copy
-     count-up    - draws attention to the four numbers that carry
-                   the strongest part of the story
-     nav state   - feedback: which section you are currently in
-     lightbox    - state transition between thumbnail and full view
+     reels     - one video plays at a time, and only while it is on
+                 screen, so the page never becomes eight competing
+                 autoplaying clips
+     carousel  - a multi-slide piece stays one tile that swipes
+     nav       - feedback: which section you are currently in
+     lightbox  - state transition between thumbnail and full view
 
-   Everything here uses IntersectionObserver or element-level
-   scroll. There is no window scroll listener anywhere.
+   There are no scroll-triggered entrance animations: content is
+   present from first paint. Everything here uses
+   IntersectionObserver or element-level scroll. There is no window
+   scroll listener anywhere.
    ============================================================ */
 (function () {
   "use strict";
@@ -37,13 +39,6 @@
       var isDark = current() === "dark";
       icon.className = "ph " + (isDark ? "ph-sun" : "ph-moon");
       btn.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
-      var meta = document.querySelector('meta[name="theme-color"]:not([media])');
-      if (!meta) {
-        meta = document.createElement("meta");
-        meta.name = "theme-color";
-        document.head.appendChild(meta);
-      }
-      meta.content = "#07182a";  // the masthead is navy in both themes
     }
 
     btn.addEventListener("click", function () {
@@ -64,7 +59,7 @@
   })();
 
   /* ---------------------------------------------------------
-     2. Nav: condensed state, scrollspy, mobile menu
+     2. Nav: shadow on scroll, scrollspy, mobile menu
      --------------------------------------------------------- */
   (function nav() {
     var header = document.getElementById("nav");
@@ -78,7 +73,6 @@
       }).observe(sentinel);
     }
 
-    // Mobile menu
     if (toggle && links) {
       var burger = toggle.querySelector("[data-burger-icon]");
 
@@ -86,6 +80,7 @@
         links.classList.toggle("is-open", open);
         toggle.setAttribute("aria-expanded", String(open));
         toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        document.body.classList.toggle("is-locked", open);
         if (burger) burger.className = "ph " + (open ? "ph-x" : "ph-list");
       }
 
@@ -105,148 +100,196 @@
       });
     }
 
-    // Scrollspy. Sections are watched through a band across the
-    // upper third of the viewport so the active link matches what
-    // the visitor is actually reading.
+    // Scrollspy. Sections are watched through a band across the upper third
+    // of the viewport so the active link matches what is being read.
     if (links && "IntersectionObserver" in window) {
-      var anchors = Array.prototype.slice.call(links.querySelectorAll("a"));
+      var anchors = Array.prototype.slice.call(links.querySelectorAll('a[href^="#"]'));
       var targets = anchors
         .map(function (a) { return document.querySelector(a.getAttribute("href")); })
         .filter(Boolean);
 
       var visible = new Set();
+      var atEnd = false;
+
+      function paint() {
+        var activeId = null;
+        for (var i = 0; i < targets.length; i++) {
+          if (visible.has(targets[i].id)) { activeId = targets[i].id; break; }
+        }
+        // The last section is shorter than a viewport, so the reading band can
+        // never reach it. At the true bottom of the page, it is what you are on.
+        if (atEnd && targets.length) activeId = targets[targets.length - 1].id;
+
+        anchors.forEach(function (a) {
+          a.classList.toggle("is-active", activeId !== null && a.getAttribute("href") === "#" + activeId);
+        });
+      }
 
       var spy = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
           if (entry.isIntersecting) visible.add(entry.target.id);
           else visible.delete(entry.target.id);
         });
-
-        var activeId = null;
-        for (var i = 0; i < targets.length; i++) {
-          if (visible.has(targets[i].id)) { activeId = targets[i].id; break; }
-        }
-
-        anchors.forEach(function (a) {
-          a.classList.toggle("is-active", activeId !== null && a.getAttribute("href") === "#" + activeId);
-        });
+        paint();
       }, { rootMargin: "-15% 0px -70% 0px", threshold: 0 });
 
       targets.forEach(function (t) { spy.observe(t); });
+
+      var end = document.getElementById("end-sentinel");
+      if (end) {
+        new IntersectionObserver(function (entries) {
+          atEnd = entries[0].isIntersecting;
+          paint();
+        }).observe(end);
+      }
     }
   })();
 
   /* ---------------------------------------------------------
-     3. Scroll reveal
+     3. Reels
+        preload="none" keeps 34 MB of video off the initial load.
+        Exactly one clip plays at a time: the one most in view.
+        Everything else is paused and muted, so scrolling never
+        stacks audio or burns battery on offscreen video.
      --------------------------------------------------------- */
-  (function reveal() {
-    var items = document.querySelectorAll(".reveal");
-    if (!items.length) return;
+  (function reels() {
+    var vids = Array.prototype.slice.call(document.querySelectorAll("[data-reel]"));
+    if (!vids.length) return;
 
-    if (reduceMotion.matches || !("IntersectionObserver" in window)) {
-      items.forEach(function (el) { el.classList.add("is-in"); });
-      return;
+    var ratios = new WeakMap();
+    var current = null;
+
+    function soundBtn(v) {
+      var frame = v.closest(".reel__frame");
+      return frame ? frame.querySelector("[data-reel-sound]") : null;
     }
 
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-in");
-        io.unobserve(entry.target);
-      });
-    }, { rootMargin: "0px 0px -6% 0px", threshold: 0.08 });
+    function paintSound(v) {
+      var btn = soundBtn(v);
+      if (!btn) return;
+      var on = !v.muted;
+      btn.setAttribute("aria-pressed", String(on));
+      btn.setAttribute("aria-label", on ? "Mute this reel" : "Turn sound on for this reel");
+      var icon = btn.querySelector("[data-reel-sound-icon]");
+      if (icon) icon.className = "ph " + (on ? "ph-speaker-simple-high" : "ph-speaker-simple-x");
+    }
 
-    items.forEach(function (el) { io.observe(el); });
+    function quiet(except) {
+      vids.forEach(function (v) {
+        if (v === except) return;
+        if (!v.paused) v.pause();
+        if (!v.muted) { v.muted = true; paintSound(v); }
+      });
+    }
+
+    function play(v) {
+      var p = v.play();
+      if (p && p.catch) p.catch(function () { /* autoplay refused, poster stays */ });
+    }
+
+    function pick() {
+      if (reduceMotion.matches) return;
+      var best = null, bestRatio = 0;
+      vids.forEach(function (v) {
+        var r = ratios.get(v) || 0;
+        if (r > bestRatio) { bestRatio = r; best = v; }
+      });
+      if (bestRatio < 0.55) best = null;
+      if (best === current) return;
+      current = best;
+      quiet(best);
+      if (best) play(best);
+    }
+
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) { ratios.set(e.target, e.intersectionRatio); });
+        pick();
+      }, { threshold: [0, 0.25, 0.5, 0.55, 0.75, 1] });
+      vids.forEach(function (v) { io.observe(v); });
+    }
+
+    vids.forEach(function (v) {
+      // Tap the video for sound. Unmuting one mutes the rest.
+      v.addEventListener("click", function () { toggleSound(v); });
+      var btn = soundBtn(v);
+      if (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+          toggleSound(v);
+        });
+      }
+      paintSound(v);
+    });
+
+    function toggleSound(v) {
+      var turningOn = v.muted;
+      if (turningOn) {
+        vids.forEach(function (o) { if (o !== v && !o.muted) { o.muted = true; paintSound(o); } });
+      }
+      v.muted = !turningOn ? true : false;
+      paintSound(v);
+      if (v.paused) { current = v; quiet(v); play(v); }
+    }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { quiet(null); current = null; }
+      else pick();
+    });
   })();
 
   /* ---------------------------------------------------------
-     4. Count-up on the numbers band
+     4. Carousels: a multi-slide piece stays one swipeable tile
      --------------------------------------------------------- */
-  (function counters() {
-    var nums = document.querySelectorAll("[data-count-to]");
-    if (!nums.length) return;
+  (function carousels() {
+    var roots = Array.prototype.slice.call(document.querySelectorAll("[data-carousel]"));
 
-    function format(el, value) {
-      var decimals = parseInt(el.dataset.decimals || "0", 10);
-      var out = value.toFixed(decimals);
-      if (el.dataset.commas) out = Number(out).toLocaleString("en-US");
-      return (el.dataset.prefix || "") + out + (el.dataset.suffix || "");
-    }
+    roots.forEach(function (root) {
+      var track = root.querySelector(".carousel__track");
+      if (!track) return;
+      var prev = root.querySelector("[data-car-prev]");
+      var next = root.querySelector("[data-car-next]");
+      var counter = root.querySelector("[data-car-i]");
+      var slides = Array.prototype.slice.call(track.children);
 
-    if (reduceMotion.matches || !("IntersectionObserver" in window)) return; // markup already holds the final value
+      if (slides.length < 2) {
+        if (prev) prev.hidden = true;
+        if (next) next.hidden = true;
+        return;
+      }
 
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        var el = entry.target;
-        io.unobserve(el);
+      var queued = false;
+      function sync() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () {
+          queued = false;
+          var w = track.clientWidth || 1;
+          var i = Math.max(0, Math.min(slides.length - 1, Math.round(track.scrollLeft / w)));
+          if (counter) counter.textContent = String(i + 1);
+          if (prev) prev.disabled = i <= 0;
+          if (next) next.disabled = i >= slides.length - 1;
+        });
+      }
 
-        var target = parseFloat(el.dataset.countTo);
-        var duration = 900;
-        var start = null;
+      function go(dir) {
+        track.scrollBy({
+          left: dir * track.clientWidth,
+          behavior: reduceMotion.matches ? "auto" : "smooth"
+        });
+      }
 
-        function tick(now) {
-          if (start === null) start = now;
-          var t = Math.min((now - start) / duration, 1);
-          var eased = 1 - Math.pow(1 - t, 3);
-          el.textContent = format(el, target * eased);
-          if (t < 1) requestAnimationFrame(tick);
-          else el.textContent = format(el, target);
-        }
-
-        el.textContent = format(el, 0);
-        requestAnimationFrame(tick);
-      });
-    }, { threshold: 0.6 });
-
-    nums.forEach(function (el) { io.observe(el); });
+      if (prev) prev.addEventListener("click", function () { go(-1); });
+      if (next) next.addEventListener("click", function () { go(1); });
+      // Element-level scroll, not window scroll. Coalesced through rAF.
+      track.addEventListener("scroll", sync, { passive: true });
+      window.addEventListener("resize", sync);
+      sync();
+    });
   })();
 
   /* ---------------------------------------------------------
-     5. Design rail: arrow controls with real disabled states
-     --------------------------------------------------------- */
-  (function rail() {
-    var track = document.getElementById("design-rail");
-    var prev = document.querySelector("[data-rail-prev]");
-    var next = document.querySelector("[data-rail-next]");
-    if (!track || !prev || !next) return;
-
-    function step() {
-      var card = track.querySelector(".sheet");
-      if (!card) return track.clientWidth * 0.8;
-      var gap = parseFloat(getComputedStyle(track).columnGap || "0") || 0;
-      return card.getBoundingClientRect().width + gap;
-    }
-
-    var queued = false;
-    function sync() {
-      if (queued) return;
-      queued = true;
-      requestAnimationFrame(function () {
-        queued = false;
-        var max = track.scrollWidth - track.clientWidth;
-        prev.disabled = track.scrollLeft <= 2;
-        next.disabled = track.scrollLeft >= max - 2;
-      });
-    }
-
-    function scrollBy(dir) {
-      track.scrollBy({
-        left: dir * step(),
-        behavior: reduceMotion.matches ? "auto" : "smooth"
-      });
-    }
-
-    prev.addEventListener("click", function () { scrollBy(-1); });
-    next.addEventListener("click", function () { scrollBy(1); });
-    // Element-level scroll, not window scroll. Coalesced through rAF.
-    track.addEventListener("scroll", sync, { passive: true });
-    window.addEventListener("resize", sync);
-    sync();
-  })();
-
-  /* ---------------------------------------------------------
-     6. Lightbox
+     5. Lightbox
      --------------------------------------------------------- */
   (function lightbox() {
     var box = document.getElementById("lightbox");
@@ -346,7 +389,7 @@
   })();
 
   /* ---------------------------------------------------------
-     7. In-page anchors: scroll and keep the URL honest, without
+     6. In-page anchors: scroll and keep the URL honest, without
         pushing a history entry for every jump.
      --------------------------------------------------------- */
   document.addEventListener("click", function (e) {

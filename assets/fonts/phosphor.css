@@ -1,4 +1,4 @@
-/* Phosphor Icons (MIT) — subset to the 19 glyphs this site actually uses.
+/* Phosphor Icons (MIT) — subset to the 20 glyphs this site actually uses.
    Source package: @phosphor-icons/web v2.1.2, regular weight.
    Subset with fonttools so the whole icon layer costs ~2.5 KB. */
 
@@ -24,22 +24,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.ph-arrow-left::before      { content: "\e058"; }
-.ph-arrow-right::before     { content: "\e06c"; }
-.ph-arrow-up-right::before  { content: "\e092"; }
-.ph-caret-left::before      { content: "\e138"; }
-.ph-caret-right::before     { content: "\e13a"; }
-.ph-envelope-simple::before { content: "\e218"; }
-.ph-graduation-cap::before  { content: "\e62c"; }
-.ph-instagram-logo::before  { content: "\e2d0"; }
-.ph-link-simple::before     { content: "\e2e6"; }
-.ph-linkedin-logo::before   { content: "\e2ee"; }
-.ph-list::before            { content: "\e2f0"; }
-.ph-map-pin::before         { content: "\e316"; }
-.ph-moon::before            { content: "\e330"; }
-.ph-phone::before           { content: "\e3b8"; }
-.ph-quotes::before          { content: "\e660"; }
-.ph-read-cv-logo::before    { content: "\ed0c"; }
-.ph-sun::before             { content: "\e472"; }
-.ph-trophy::before          { content: "\e67e"; }
-.ph-x::before               { content: "\e4f6"; }
+.ph-arrow-left::before         { content: "\e058"; }
+.ph-arrow-right::before        { content: "\e06c"; }
+.ph-arrow-up-right::before     { content: "\e092"; }
+.ph-caret-left::before         { content: "\e138"; }
+.ph-caret-right::before        { content: "\e13a"; }
+.ph-envelope-simple::before    { content: "\e218"; }
+.ph-graduation-cap::before     { content: "\e62c"; }
+.ph-instagram-logo::before     { content: "\e2d0"; }
+.ph-linkedin-logo::before      { content: "\e2ee"; }
+.ph-list::before               { content: "\e2f0"; }
+.ph-map-pin::before            { content: "\e316"; }
+.ph-moon::before               { content: "\e330"; }
+.ph-phone::before              { content: "\e3b8"; }
+.ph-play::before               { content: "\e3d0"; }
+.ph-read-cv-logo::before       { content: "\ed0c"; }
+.ph-speaker-simple-high::before{ content: "\e450"; }
+.ph-speaker-simple-x::before   { content: "\e458"; }
+.ph-sun::before                { content: "\e472"; }
+.ph-trophy::before             { content: "\e67e"; }
+.ph-x::before                  { content: "\e4f6"; }
